@@ -10,7 +10,7 @@ Sistema por consola para administrar alquileres, devoluciones y vencimientos de 
 📦 biblioteca
 ┣ 📂 src
 ┃ ┣ 📜 Socio.java
-┃ ┣ 📜 Préstamo.java
+┃ ┣ 📜 Prestamo.java
 ┃ ┣ 📜 Estudiante.java
 ┃ ┣ 📜 Docente.java
 ┃ ┗ 📜 GestionBiblioteca.java (Clase Ejecutable)
