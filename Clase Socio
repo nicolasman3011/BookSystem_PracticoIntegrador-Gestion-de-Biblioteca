@@ -76,7 +76,7 @@ public abstract class Socio {
         return this.prestamos;
     }
 
-    // Métodos de ABM para la colección (Necesarios para la clase Biblioteca)
+    // Métodos para la colección (Necesarios para la clase Biblioteca)
     public boolean addPrestamo(Prestamo p_prestamo) {
         return this.getPrestamos().add(p_prestamo);
     }
