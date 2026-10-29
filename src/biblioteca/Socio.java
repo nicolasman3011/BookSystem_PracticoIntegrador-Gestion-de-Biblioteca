@@ -48,7 +48,7 @@ public abstract class Socio {
     }
 
     /**
-     * IMPORTANTE: Se declara 'protected' (o public) para que la clase hija 'Docente' 
+     * IMPORTANTE: Se declara 'protected' para que la clase hija 'Docente' 
      * pueda acceder a este mutador en su método 'cambiarDiasDePrestamo(int)'.
      */
     protected void setDiasPrestamo(int p_diasPrestamo) {
@@ -86,10 +86,28 @@ public abstract class Socio {
     }
 
     // Métodos Abstractos
-    public abstract boolean puedePedir();
     public abstract String soyDeLaClase();
 
-    // Lógica de negocio
+    // Metodos
+
+    /**
+     * Evalúa si el socio tiene el derecho de pedir un nuevo libro.
+     * Retorna true si NO tiene préstamos activos vencidos.
+     * @return boolean
+     */
+    public boolean puedePedir() {
+        Calendar hoy = Calendar.getInstance(); // Fecha actual del sistema
+        
+        // Recorremos el historial de préstamos del socio
+        for (Prestamo prestamo : this.getPrestamos()) {
+            // Un préstamo es un problema solo si está activo (no devuelto) y además está vencido
+            if (prestamo.getFechaDevolucion() == null && prestamo.vencido(hoy)) {
+                return false; // Al primer préstamo vencido que encuentra, se le niega el permiso
+            }
+        }
+        return true; 
+    }
+    
     /**
      * Calcula la cantidad de libros que actualmente están en poder del socio.
      * @return Cantidad de préstamos activos (sin fecha de devolución).
