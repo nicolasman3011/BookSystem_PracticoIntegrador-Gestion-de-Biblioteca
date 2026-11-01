@@ -4,7 +4,11 @@ import java.text.SimpleDateFormat; // Importamos para formatear fecha
 
 /**
  * Representa la transacción entre un Socio y un Libro.
+ * @author Grat, Enrique
+ * @version 1.0
+ * @since 28/10/2026
  */
+
 public class Prestamo {
     private Calendar fechaRetiro;
     private Calendar fechaDevolucion;
