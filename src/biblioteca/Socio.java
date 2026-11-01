@@ -4,7 +4,11 @@ import java.util.ArrayList;
 /**
  * Clase abstracta que representa a un Socio de la biblioteca (Estudiante o Docente).
  * Centraliza los datos comunes y delega comportamiento específico a las subclases.
+ * @author Grat, Enrique
+ * @version 1.0
+ * @since 27/10/2026
  */
+
 public abstract class Socio {
     private int dniSocio;
     private String nombre;
