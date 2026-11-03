@@ -1,0 +1,21 @@
+#BlueJ class context
+#Mon Nov 02 13:57:01 ART 2026
+comment0.target=VentanaBiblioteca
+comment0.text=\r\n Interfaz gr\u00E1fica (GUI) para la gesti\u00F3n de la biblioteca utilizando Java Swing.\r\n Act\u00FAa como Controlador y Vista, reemplazando a la clase de consola GestionBiblioteca.\r\n \r\n @author Grupo Completo - TP7 Integrador\r\n
+comment1.target=VentanaBiblioteca()
+comment1.text=\r\n Constructor de la ventana. Configura el contenedor y los componentes.\r\n
+comment2.params=e
+comment2.target=void windowClosing(java.awt.event.WindowEvent)
+comment3.target=void cargarDatosPrueba()
+comment3.text=\r\n Carga inicial autom\u00E1tica de socios y libros.\r\n
+comment4.params=e
+comment4.target=void actionPerformed(java.awt.event.ActionEvent)
+comment4.text=\r\n M\u00E9todo obligatorio de la interfaz ActionListener.\r\n Define qu\u00E9 acci\u00F3n se ejecuta al presionar cada bot\u00F3n.\r\n
+comment5.params=titulo
+comment5.target=Libro buscarLibroPorTitulo(java.lang.String)
+comment6.target=void registrarPrestamoGUI()
+comment7.target=void registrarDevolucionGUI()
+comment8.params=args
+comment8.target=void main(java.lang.String[])
+comment8.text=\r\n Punto de entrada principal de la aplicaci\u00F3n.\r\n
+numComments=9
