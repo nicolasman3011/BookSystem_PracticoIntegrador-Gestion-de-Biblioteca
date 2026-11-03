@@ -62,8 +62,8 @@ public class VentanaBibliotecaDAO extends JFrame implements ActionListener {
 
         btnListarSociosLibros = new JButton("Listar Socios y Libros");
         btnCantEstudiantes = new JButton("Cantidad Estudiantes");
-        btnDocentesResponsables = new JButton("Docentes Responsables");
-        btnTitulosUnicos = new JButton("Ver Títulos Únicos");
+        btnDocentesResponsables = new JButton("Docentes");
+        btnTitulosUnicos = new JButton("Ver Títulos");
         btnPrestamosVencidos = new JButton("Préstamos Vencidos");
         btnRegistrarPrestamo = new JButton("Registrar Préstamo");
         btnRegistrarDevolucion = new JButton("Registrar Devolución");
@@ -176,7 +176,7 @@ public class VentanaBibliotecaDAO extends JFrame implements ActionListener {
             int cant = miBiblioteca.cantidadDeSociosPorTipo("Estudiante");
             areaResultados.setText(">>> REPORTE: CANTIDAD DE ESTUDIANTES <<<\n\nHay un total de " + cant + " socios Estudiantes registrados.");
         } else if (botonPulsado == btnDocentesResponsables) {
-            areaResultados.setText(">>> REPORTE: DOCENTES RESPONSABLES <<<\n\n" + miBiblioteca.listaDeDocentesResponsables());
+            areaResultados.setText(">>> REPORTE: DOCENTES <<<\n\n" + miBiblioteca.listaDeDocentesResponsables());
         } else if (botonPulsado == btnTitulosUnicos) {
             areaResultados.setText(">>> REPORTE: TÍTULOS EN CATÁLOGO <<<\n\n" + miBiblioteca.listaDeTitulos());
         } else if (botonPulsado == btnPrestamosVencidos) {
