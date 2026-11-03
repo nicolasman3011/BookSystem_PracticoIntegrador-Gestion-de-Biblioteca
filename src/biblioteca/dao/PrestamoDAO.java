@@ -18,13 +18,15 @@ public class PrestamoDAO {
             pstmt.setString(2, p_prestamo.getLibro().getTitulo());
             
             java.sql.Date fechaRetiroSQL = new java.sql.Date(p_prestamo.getFechaRetiro().getTimeInMillis());
-            pstmt.setDate(3, fechaRetiroSQL);
+            // Guardamos la fecha explícitamente como String en formato "YYYY-MM-DD"
+            pstmt.setString(3, fechaRetiroSQL.toString());
             
             if (p_prestamo.getFechaDevolucion() != null) {
                 java.sql.Date fechaDevolucionSQL = new java.sql.Date(p_prestamo.getFechaDevolucion().getTimeInMillis());
-                pstmt.setDate(4, fechaDevolucionSQL);
+                pstmt.setString(4, fechaDevolucionSQL.toString());
             } else {
-                pstmt.setNull(4, Types.DATE);
+                // Usamos VARCHAR porque ahora la columna guardará texto
+                pstmt.setNull(4, Types.VARCHAR);
             }
             
             pstmt.executeUpdate();
@@ -41,7 +43,8 @@ public class PrestamoDAO {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             java.sql.Date fechaDevolucionSQL = new java.sql.Date(p_prestamo.getFechaDevolucion().getTimeInMillis());
-            pstmt.setDate(1, fechaDevolucionSQL);
+            // Guardamos como String
+            pstmt.setString(1, fechaDevolucionSQL.toString());
             
             pstmt.setInt(2, p_prestamo.getSocio().getDniSocio());
             pstmt.setString(3, p_prestamo.getLibro().getTitulo());
