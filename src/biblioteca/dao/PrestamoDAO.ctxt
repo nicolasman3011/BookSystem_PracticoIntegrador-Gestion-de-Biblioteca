@@ -1,0 +1,10 @@
+#BlueJ class context
+#Tue Nov 03 09:11:53 ART 2026
+comment0.target=PrestamoDAO
+comment0.text=\r\n Objeto de acceso a datos para la entidad Prestamo.\r\n
+comment1.params=p_prestamo
+comment1.target=boolean insertarPrestamo(biblioteca.Prestamo)
+comment2.params=p_prestamo
+comment2.target=boolean actualizarDevolucion(biblioteca.Prestamo)
+comment3.target=java.sql.ResultSet obtenerTodosRaw()
+numComments=4

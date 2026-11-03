@@ -1,0 +1,8 @@
+#BlueJ class context
+#Tue Nov 03 08:43:50 ART 2026
+comment0.target=LibroDAO
+comment0.text=\r\n Objeto de acceso a datos para la entidad Libro.\r\n
+comment1.params=p_libro
+comment1.target=boolean insertarLibro(biblioteca.Libro)
+comment2.target=java.util.ArrayList obtenerTodos()
+numComments=3

@@ -1,0 +1,6 @@
+#BlueJ class context
+#Mon Nov 02 19:55:31 ART 2026
+comment0.target=ConexionDB
+comment0.text=\r\n Gestiona la conexi\u00F3n mediante JDBC con la base de datos SQLite.\r\n
+comment1.target=java.sql.Connection getConexion()
+numComments=2

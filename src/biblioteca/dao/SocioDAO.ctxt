@@ -1,0 +1,8 @@
+#BlueJ class context
+#Mon Nov 02 19:56:13 ART 2026
+comment0.target=SocioDAO
+comment0.text=\r\n Objeto de acceso a datos para Socio (Estudiante y Docente) aplicando Single Table.\r\n
+comment1.params=p_socio
+comment1.target=boolean insertarSocio(biblioteca.Socio)
+comment2.target=java.util.ArrayList obtenerTodos()
+numComments=3
