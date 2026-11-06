@@ -1,20 +1,23 @@
- import package biblioteca;
+package biblioteca;
 
 import java.util.ArrayList;
 
 /**
  * Clase Libro - Representa un ejemplar físico de la biblioteca y gestiona su historial de préstamos.
  * 
- * @author Nicolás Javier Mancedo 
- * @version 1.0
+ * @author Nicolás Javier Mancedo (Adaptado para BD con idLibro por Equipo BookSystem)
+ * @version 2.0
  * @since 31/10/2026
  * 
  * Historial de cambios:
  * - Implementación de la estructura de 3 constructores para relación 0..*.
  * - Encapsulamiento estricto con setters privados.
+ * - [BookSystem] Se agregó idLibro para funcionar como Primary Key en SQLite y permitir copias múltiples.
  */
 public class Libro {
     
+    // --- ATRIBUTOS ---
+    private int idLibro; // NUEVO: Identificador único del ejemplar físico para la BD
     private String titulo;
     private int edicion;
     private String editorial;
@@ -24,7 +27,8 @@ public class Libro {
     /**
      * Constructor 1: Inicializa el libro creando una lista de préstamos vacía.
      */
-    public Libro(String p_titulo, int p_edicion, String p_editorial, int p_anio){
+    public Libro(int p_idLibro, String p_titulo, int p_edicion, String p_editorial, int p_anio){
+        this.setIdLibro(p_idLibro);
         this.setTitulo(p_titulo);
         this.setEdicion(p_edicion);
         this.setEditorial(p_editorial);
@@ -35,7 +39,8 @@ public class Libro {
     /**
      * Constructor 2: Inicializa el libro recibiendo una colección de préstamos ya existente.
      */
-    public Libro(String p_titulo, int p_edicion, String p_editorial, int p_anio, ArrayList<Prestamo> p_prestamos){
+    public Libro(int p_idLibro, String p_titulo, int p_edicion, String p_editorial, int p_anio, ArrayList<Prestamo> p_prestamos){
+        this.setIdLibro(p_idLibro);
         this.setTitulo(p_titulo);
         this.setEdicion(p_edicion);
         this.setEditorial(p_editorial);
@@ -46,7 +51,8 @@ public class Libro {
     /**
      * Constructor 3: Inicializa el libro creando la lista y agregando un primer préstamo individual.
      */
-    public Libro(String p_titulo, int p_edicion, String p_editorial, int p_anio, Prestamo p_prestamo){
+    public Libro(int p_idLibro, String p_titulo, int p_edicion, String p_editorial, int p_anio, Prestamo p_prestamo){
+        this.setIdLibro(p_idLibro);
         this.setTitulo(p_titulo); 
         this.setEdicion(p_edicion);
         this.setEditorial(p_editorial);
@@ -70,6 +76,11 @@ public class Libro {
         return this.getPrestamos().remove(p_prestamo);
     }
     
+    // --- SETTERS PRIVADOS (Doble Encapsulamiento) ---
+    private void setIdLibro(int p_idLibro) {
+        this.idLibro = p_idLibro;
+    }
+
     private void setTitulo(String p_titulo){
         this.titulo = p_titulo;
     }
@@ -91,7 +102,10 @@ public class Libro {
     }
     
     // --- GETTERS PÚBLICOS ---
-    
+    public int getIdLibro() {
+        return this.idLibro;
+    }
+
     public String getTitulo(){
         return this.titulo;
     }
@@ -122,6 +136,7 @@ public class Libro {
         if (this.getPrestamos().isEmpty()) {
             return null;
         }
+        // Obtiene el último elemento de la colección
         return this.getPrestamos().get(this.getPrestamos().size() - 1);
     }
 
@@ -143,7 +158,7 @@ public class Libro {
      */
     @Override
     public String toString() {
+        // Mantenemos el formato original solicitado por la cátedra
         return "Titulo: " + this.getTitulo();
     }
 }
-
