@@ -1,9 +1,10 @@
-package biblioteca;
+ackage biblioteca;
 import java.util.Calendar;
 import java.text.SimpleDateFormat; // Importamos para formatear fecha
 
 /**
  * Representa la transacción entre un Socio y un Libro.
+ * 
  * @author Grat, Enrique
  * @version 1.0
  * @since 28/10/2026
