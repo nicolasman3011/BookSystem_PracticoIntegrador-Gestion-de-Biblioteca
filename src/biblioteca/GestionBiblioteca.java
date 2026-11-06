@@ -9,7 +9,7 @@ import java.util.Scanner;
  * para instanciar y probar todas las funcionalidades requeridas por el TP7.
  * 
  * @author Grupo Completo - TP7 Integrador
- * @version 1.0
+ * @version 12.0
  */
 public class GestionBiblioteca {
 
@@ -57,7 +57,7 @@ public class GestionBiblioteca {
           // ¿Cuál es la lista de libros? ¿Y la de socios?
           System.out.println(miBiblioteca.listaDeSocios());
           System.out.println();
-          System.out.println(miBiblioteca.listaDeLibros());
+          System.out.println(miBiblioteca.listaDeTitulos());
           break;
 
         case 4:
@@ -118,7 +118,7 @@ public class GestionBiblioteca {
     System.out.println("         MENÚ DE GESTIÓN DE BIBLIOTECA - TP7      ");
     System.out.println("==================================================");
     System.out.println("1) Consultar cantidad de socios tipo Estudiante");
-    System.out.println("2) Listar docentes responsables (sin deudas)");
+    System.out.println("2) Listar docentes (sin deudas)");
     System.out.println("3) Mostrar listado completo de Socios y Libros");
     System.out.println("4) Consultar quién tiene un libro en préstamo");
     System.out.println("5) Registrar el préstamo de un libro");
@@ -136,10 +136,10 @@ public class GestionBiblioteca {
    */
   private static void cargarDatosIniciales(Biblioteca p_biblioteca) {
     // Carga de libros
-    p_biblioteca.nuevoLibro("JAVA. Como Programar", 10, "Pearson", 2016);
-    p_biblioteca.nuevoLibro("Longman. Diccionario Pocket", 2, "Longman", 2018);
-    p_biblioteca.nuevoLibro("Vivir para contarla", 1, "Sudamericana", 2002);
-    p_biblioteca.nuevoLibro("JAVA. Como Programar", 11, "Pearson", 2020); // Segundo ejemplar del mismo título
+    p_biblioteca.nuevoLibro(1,"JAVA. Como Programar", 10, "Pearson", 2016);
+    p_biblioteca.nuevoLibro(2,"Longman. Diccionario Pocket", 2, "Longman", 2018);
+    p_biblioteca.nuevoLibro(3,"Vivir para contarla", 1, "Sudamericana", 2002);
+    p_biblioteca.nuevoLibro(4,"JAVA. Como Programar", 11, "Pearson", 2020); // Segundo ejemplar del mismo título
 
     // Carga de socios docentes
     p_biblioteca.nuevoSocioDocente(14524782, "Juan Perez", "Sistemas");
@@ -312,6 +312,9 @@ public class GestionBiblioteca {
    * Permite agregar de forma interactiva un nuevo libro mediante teclado.
    */
   private static void agregarNuevoLibro(Biblioteca p_biblioteca, Scanner p_teclado) {
+    System.out.print("ID: ");
+    int id = Integer.parseInt(p_teclado.nextLine());
+      
     System.out.print("Título: ");
     String titulo = p_teclado.nextLine();
 
@@ -323,8 +326,8 @@ public class GestionBiblioteca {
 
     System.out.print("Año: ");
     int anio = Integer.parseInt(p_teclado.nextLine());
-
-    p_biblioteca.nuevoLibro(titulo, edicion, editorial, anio);
+    
+    p_biblioteca.nuevoLibro(id, titulo, edicion, editorial, anio);
     System.out.println("Libro agregado exitosamente al catálogo.");
   }
 }
