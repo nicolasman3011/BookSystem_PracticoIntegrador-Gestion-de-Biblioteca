@@ -9,7 +9,7 @@ import java.util.Scanner;
  * para instanciar y probar todas las funcionalidades requeridas por el TP7.
  * 
  * @author Grupo Completo - TP7 Integrador
- * @version 12.0
+ * @version 2.0
  */
 public class GestionBiblioteca {
 
