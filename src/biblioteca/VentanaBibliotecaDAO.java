@@ -14,15 +14,15 @@ import java.util.Calendar;
  * con el Modelo y la Base de Datos SQLite.
  * 
  * @author Equipo BookSystem
- * @version 4.0 (Compatible con idLibro y copias múltiples)
+ * @version 4.2 (Con parche para lectura segura de fechas nulas)
  */
 public class VentanaBibliotecaDAO extends JFrame implements ActionListener {
-     // --- EL MODELO Y LOS DAO ---
+    
     private Biblioteca miBiblioteca;
     private SocioDAO socioDAO;
     private LibroDAO libroDAO;
     private PrestamoDAO prestamoDAO;
-    // --- COMPONENTES VISUALES (SWING) ---
+    
     private JTextArea areaResultados;
     private JButton btnListarSociosLibros, btnCantEstudiantes, btnDocentesResponsables;
     private JButton btnTitulosUnicos, btnPrestamosVencidos, btnRegistrarPrestamo;
@@ -44,7 +44,7 @@ public class VentanaBibliotecaDAO extends JFrame implements ActionListener {
         
         this.setTitle("Sistema de Gestión de Biblioteca - BookSystem");
         this.setSize(1000, 650);
-        this.setLocationRelativeTo(null);// Centra la ventana
+        this.setLocationRelativeTo(null);
         
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent p_evento) {
@@ -58,7 +58,7 @@ public class VentanaBibliotecaDAO extends JFrame implements ActionListener {
         JPanel panelMenu = new JPanel();
         panelMenu.setLayout(new GridLayout(11, 1, 5, 5));
         panelMenu.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        // Inicialización de botones
+
         this.btnListarSociosLibros = new JButton("Listar Socios y Libros");
         this.btnCantEstudiantes = new JButton("Cantidad Estudiantes");
         this.btnDocentesResponsables = new JButton("Docentes");
@@ -97,6 +97,7 @@ public class VentanaBibliotecaDAO extends JFrame implements ActionListener {
 
     /**
      * Recupera la base de datos e hidrata la memoria, utilizando libro_id en lugar de título.
+     * Incorpora validación estricta para evitar fallos de parseo en fechas nulas.
      */
     private void cargarDatosDesdeBaseDeDatos() {
         ArrayList<Socio> sociosDB = this.socioDAO.obtenerTodos();
@@ -121,18 +122,23 @@ public class VentanaBibliotecaDAO extends JFrame implements ActionListener {
 
                 while (rs.next()) {
                     int dni = rs.getInt("socio_dni");
-                    int idLibro = rs.getInt("libro_id"); // CORRECCIÓN CLAVE
+                    int idLibro = rs.getInt("libro_id"); 
                     
                     String fechaRetiroStr = rs.getString("fecha_retiro");
                     String fechaDevolucionStr = rs.getString("fecha_devolucion");
                     
-                    if(fechaRetiroStr == null) continue;
+                    if (fechaRetiroStr == null) continue;
 
                     Date fechaRetiroSQL = Date.valueOf(fechaRetiroStr);
-                    Date fechaDevolucionSQL = (fechaDevolucionStr != null) ? Date.valueOf(fechaDevolucionStr) : null;
+                    
+                    // CORRECCIÓN PARSEO: Blindaje contra fechas devueltas como texto "null"
+                    Date fechaDevolucionSQL = null;
+                    if (fechaDevolucionStr != null && !fechaDevolucionStr.trim().equalsIgnoreCase("null") && !fechaDevolucionStr.trim().isEmpty()) {
+                        fechaDevolucionSQL = Date.valueOf(fechaDevolucionStr);
+                    }
 
                     Socio socio = this.miBiblioteca.buscarSocio(dni);
-                    Libro libro = this.miBiblioteca.buscarLibroPorId(idLibro); // Búsqueda física
+                    Libro libro = this.miBiblioteca.buscarLibroPorId(idLibro); 
 
                     if (socio != null && libro != null) {
                         Calendar fechaRetiro = Calendar.getInstance();
@@ -159,7 +165,6 @@ public class VentanaBibliotecaDAO extends JFrame implements ActionListener {
             try {
                 if (rs != null) rs.close();
                 if (stmt != null) stmt.close();
-                // SE ELIMINÓ conn.close() PARA MANTENER LA CONEXIÓN ACTIVA DURANTE EL CICLO DE VIDA DE LA VENTANA
             } catch (SQLException ex) {
                 System.out.println("Error cerrando recursos: " + ex.getMessage());
             }
@@ -178,11 +183,8 @@ public class VentanaBibliotecaDAO extends JFrame implements ActionListener {
         } else if (boton == this.btnCantEstudiantes) {
             int cant = this.miBiblioteca.cantidadDeSociosPorTipo("Estudiante");
             this.areaResultados.setText("Cantidad Estudiantes: " + cant);
-        
-        // CORRECCIÓN: Se agregó el bloque para el botón Docentes Responsables
         } else if (boton == this.btnDocentesResponsables) {
             this.areaResultados.setText(this.miBiblioteca.listaDeDocentesResponsables());
-            
         } else if (boton == this.btnTitulosUnicos) {
             this.areaResultados.setText(">>> TÍTULOS EN CATÁLOGO <<<\n" + this.miBiblioteca.listaDeTitulos());
         } else if (boton == this.btnPrestamosVencidos) {
