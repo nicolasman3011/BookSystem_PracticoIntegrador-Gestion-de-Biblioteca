@@ -2,17 +2,21 @@ package biblioteca.dao;
 
 import biblioteca.Prestamo;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 
 /**
  * Data Access Object (DAO) para la clase Prestamo.
  * Maneja el registro histórico de operaciones entre Socios y Ejemplares (Libros).
  * 
  * @author Equipo BookSystem
- * @version 2.0 (Adaptado para referenciar a libro_id)
+ * @version 3.1 (Corrección definitiva forzando el formato de fechas a String para SQLite)
  */
 public class PrestamoDAO {
     private Connection conexion;
 
+    /**
+     * Constructor que inicializa la conexión a SQLite.
+     */
     public PrestamoDAO() {
         this.conexion = ConexionDB.getConexion();
     }
@@ -28,18 +32,21 @@ public class PrestamoDAO {
         try (PreparedStatement pstmt = this.conexion.prepareStatement(sql)) {
             
             pstmt.setInt(1, p_prestamo.getSocio().getDniSocio());
-            // Guardamos la referencia física exacta del libro (Clave foránea libro_id)
             pstmt.setInt(2, p_prestamo.getLibro().getIdLibro()); 
             
-            // Conversión de fechas a java.sql.Date para SQLite
-            java.sql.Date fechaRetiroSQL = new java.sql.Date(p_prestamo.getFechaRetiro().getTimeInMillis());
-            pstmt.setDate(3, fechaRetiroSQL);
+            // Definimos el formato estricto que espera la base de datos
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+            // Convertimos la fecha de retiro a String
+            String fechaRetiroStr = sdf.format(p_prestamo.getFechaRetiro().getTime());
+            pstmt.setString(3, fechaRetiroStr);
             
             if (p_prestamo.getFechaDevolucion() != null) {
-                java.sql.Date fechaDevolucionSQL = new java.sql.Date(p_prestamo.getFechaDevolucion().getTimeInMillis());
-                pstmt.setDate(4, fechaDevolucionSQL);
+                String fechaDevolucionStr = sdf.format(p_prestamo.getFechaDevolucion().getTime());
+                pstmt.setString(4, fechaDevolucionStr);
             } else {
-                pstmt.setNull(4, java.sql.Types.DATE);
+                // Enviamos el null estricto como texto (VARCHAR)
+                pstmt.setNull(4, java.sql.Types.VARCHAR);
             }
             
             pstmt.executeUpdate();
@@ -57,12 +64,14 @@ public class PrestamoDAO {
      * @return true si la base de datos se actualizó correctamente.
      */
     public boolean actualizarDevolucion(Prestamo p_prestamo) {
-        // La actualización usa la conjunción del DNI del socio y el ID FÍSICO del libro para ser exacta
         String sql = "UPDATE prestamos SET fecha_devolucion = ? WHERE socio_dni = ? AND libro_id = ? AND fecha_devolucion IS NULL";
         try (PreparedStatement pstmt = this.conexion.prepareStatement(sql)) {
             
-            java.sql.Date fechaDevolucionSQL = new java.sql.Date(p_prestamo.getFechaDevolucion().getTimeInMillis());
-            pstmt.setDate(1, fechaDevolucionSQL);
+            // Formateamos la fecha a String para evitar que SQLite guarde los milisegundos
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String fechaDevolucionStr = sdf.format(p_prestamo.getFechaDevolucion().getTime());
+            
+            pstmt.setString(1, fechaDevolucionStr);
             pstmt.setInt(2, p_prestamo.getSocio().getDniSocio());
             pstmt.setInt(3, p_prestamo.getLibro().getIdLibro()); 
             
@@ -76,13 +85,11 @@ public class PrestamoDAO {
 
     /**
      * Recupera el conjunto de datos crudos (ResultSet) de todos los préstamos históricos.
-     * Este método extrae libro_id para que VentanaBibliotecaDAO arme los objetos.
      * 
      * @return ResultSet con la tabla de préstamos.
      * @throws SQLException Si hay un problema de comunicación con SQLite.
      */
     public ResultSet obtenerTodosRaw() throws SQLException {
-        // Extraemos libro_id (FK) en vez del antiguo título
         String sql = "SELECT id_prestamo, socio_dni, libro_id, fecha_retiro, fecha_devolucion FROM prestamos";
         Statement stmt = this.conexion.createStatement();
         return stmt.executeQuery(sql);
