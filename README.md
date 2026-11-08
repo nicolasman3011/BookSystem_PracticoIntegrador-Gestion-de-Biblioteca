@@ -30,26 +30,25 @@ Desarrollar un sistema completo requiere organización, por lo que trabajamos de
 
 ## 🛠️ Tecnologías Utilizadas
 - **Lenguaje Principal:** Java SE
-- **Interfaz Gráfica:** Java Swing
-- **Base de Datos:** SQL Server / PostgreSQL
-- **Conexión a BD:** JDBC (Java Database Connectivity)
-- **Arquitectura y Patrones:** MVC (Modelo-Vista-Controlador) y DAO
+- **Entorno de Desarrollo (IDE):** BlueJ
+- **Base de Datos:** SQLite
+- **Conexión a BD:** JDBC (estándar de Java)
 - **Paradigma:** Programación Orientada a Objetos (POO)
-
+- **Control de Versiones:** Git & GitHub
 ---
 
-## 👥 Autores y División de Tareas
+## 👥 Autores del Proyecto
 
-| Desarrollador | Rol / Tareas Asignadas |
-| :--- | :--- |
-| **Nicolás Javier Mancedo** | Desarrollo general, estructuración de arquitectura y capa de persistencia (DAO/SQL) |
-| **Néstor Nacimiento** | Desarrollo core, lógica de controladores e interfaz gráfica (Swing) |
-| **Enrique** | Desarrollo de módulos y lógica de negocio |
-| **Andrés Candia** | Desarrollo de módulos y lógica de negocio |
-| **Silvana Ponce** | Desarrollo de módulos y lógica de negocio |
-| **Joaquín Rodríguez** | Desarrollo de módulos y lógica de negocio |
-
+| 👨‍💻 Equipo de Desarrollo |
+| :--- |
+| **Nicolás Javier Mancedo** |
+| **Enrique Grat** |
+| **Andrés Candia** |
+| **Néstor Javier Nacimiento** |
+| **Silvana Ponce** |
+| **Joaquín Rodríguez** |
 ---
+
 ## 📂 Dónde está cada cosa
 
 El proyecto está rigurosamente organizado en paquetes lógicos para mantener el código limpio y cumplir con la arquitectura MVC:
